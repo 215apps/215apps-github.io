@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" class="dark-mode">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>215APPS</title>
+    <script src="inter.js"></script>
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light") {
+          document.documentElement.classList.remove("dark-mode");
+          document.documentElement.classList.add("light-mode");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>215APPS</h1>
+        <h1 id="current-time"></h1>
+      </div>
+
+      <div class="divider-container">
+        <hr class="header-divider left-line" />
+
+        <div class="toggle-wrapper">
+          <input
+            type="radio"
+            id="toggle-about"
+            name="header-toggle"
+            value="about"
+            checked
+          />
+          <label for="toggle-about">About</label>
+
+          <input
+            type="radio"
+            id="toggle-apps"
+            name="header-toggle"
+            value="apps"
+          />
+          <label for="toggle-apps">Apps</label>
+
+          <input
+            type="radio"
+            id="toggle-contact"
+            name="header-toggle"
+            value="contact"
+          />
+          <label for="toggle-contact">Contact</label>
+
+          <div class="toggle-slider"></div>
+        </div>
+
+        <hr class="header-divider right-line" />
+      </div>
+    </header>
+
+    <main>
+      <section class="content-panel view-about"></section>
+
+      <section class="content-panel view-apps"></section>
+
+      <section class="content-panel view-contact"></section>
+    </main>
+
+    <footer>
+      <hr class="footer-divider" />
+      <span class="footer-text">&#169; 2026 215APPS</span>
+    </footer>
+  </body>
+</html>
