@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Commented out since .theme-toggle is missing from HTML,
-  // keeping it so your script doesn't break if you use it elsewhere.
-  const themeToggleBtn = document.querySelector(".theme-toggle");
+  // Select all theme-toggle button instances (Desktop and Mobile)
+  const themeToggleBtns = document.querySelectorAll(".theme-toggle");
+  const body = document.body;
+  const dateElement = document.getElementById("current-date");
   const timeElement = document.getElementById("current-time");
 
   // Function to update the clock
@@ -16,31 +17,32 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Convert to string and force uppercase for AM/PM
-    let timeString = now.toLocaleTimeString("en-US", timeOptions);
-    timeElement.textContent = timeString.toUpperCase();
+    if (timeElement) {
+      let timeString = now.toLocaleTimeString("en-US", timeOptions);
+      timeElement.textContent = timeString.toUpperCase();
+    }
   };
 
   // Run immediately and then every second
   updateClock();
   setInterval(updateClock, 1000);
 
-  // Theme Logic
+  // Theme Logic applied globally across all template buttons
   const htmlElement = document.documentElement;
 
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener("click", () => {
+  themeToggleBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
       htmlElement.classList.toggle("light-mode");
       const isLight = htmlElement.classList.contains("light-mode");
       localStorage.setItem("theme", isLight ? "light" : "dark");
     });
-  }
+  });
 
-  // Optional: Event listener if you want to run code when the new toggle changes
+  // Event listener for tab transitions
   const toggles = document.querySelectorAll('input[name="header-toggle"]');
   toggles.forEach((toggle) => {
     toggle.addEventListener("change", (e) => {
       console.log(`Selected view: ${e.target.value}`);
-      // Add your navigation or view switching logic here
     });
   });
 });
