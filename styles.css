@@ -20,6 +20,7 @@ a {
   --toggle-text: #8e8e93;
   --toggle-text-active: #000000;
   --slider-bg: #ffffff;
+  --icon-color: #f5f5f7;
 }
 
 .light-mode {
@@ -30,6 +31,7 @@ a {
   --toggle-text: #636366;
   --toggle-text-active: #000000;
   --slider-bg: #ffffff;
+  --icon-color: #000000;
 }
 
 body {
@@ -41,6 +43,9 @@ body {
   color: var(--text-color);
   background-color: var(--bg-color);
   overflow: hidden;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 header {
@@ -52,6 +57,11 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header-content h1 {
+  transition: font-size 0.2s ease;
+  font: 2em;
 }
 
 /* Divider & Tab Layout fixes */
@@ -67,6 +77,12 @@ header {
   flex: 1;
   border: none;
   border-top: 1px solid var(--divider-color);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* 3-Part Segmented Control */
@@ -103,7 +119,9 @@ header {
 .toggle-slider {
   position: absolute;
   height: calc(100% - 6px);
-  width: calc(33.333% - 4px); /* Perfect third of the container size */
+  width: calc(
+    (100% - 6px) / 3
+  ); /* Accounts perfectly for the container's 3px padding on both sides */
   top: 3px;
   left: 3px;
   background-color: var(--slider-bg);
@@ -138,7 +156,9 @@ header {
 main {
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex: 1;
+  margin-top: 2rem;
 }
 
 .content-panel {
@@ -153,7 +173,7 @@ body:has(#toggle-about:checked) .view-about {
 }
 
 body:has(#toggle-apps:checked) .view-apps {
-  display: block;
+  display: flex; /* Updated to display flex layout when active */
 }
 
 body:has(#toggle-contact:checked) .view-contact {
@@ -181,4 +201,122 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding-bottom: 0.5rem;
+}
+
+.error {
+  margin-top: 1rem;
+}
+
+.error a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Apps Panel Structural Styles
+   ========================================================================== */
+
+.view-apps {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Square container with relative positioning for absolute child objects */
+.appcard {
+  position: relative;
+  width: 280px;
+  height: 280px; /* Forces exact square container dimensions */
+  padding: 1rem;
+  border: 1px solid var(--divider-color);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+/* Pin the SVG container directly into the top right corner */
+.app-svgs {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Clean square App Icon styling matching an iOS squircle curve */
+.katchupapp {
+  width: 72px;
+  height: 72px; /* Perfect square dimensions */
+  border-radius: 22.5%; /* Rounded curves engineered to resemble Apple app icons */
+  overflow: hidden;
+  margin-bottom: 1.25rem; /* Delivers the explicit breathing room requested below */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.katchupapp img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text Element Layout Adaptations */
+.appcard h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.appcard h4 {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--toggle-text);
+}
+
+/* ==========================================================================
+   Theme Toggle System
+   ========================================================================== */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+
+  /* Circular configuration */
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+
+  /* Inherits grey tone from the Segmented Control */
+  background-color: var(--toggle-bg);
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Base icon state logic (Default Dark Mode configuration) */
+.theme-toggle svg:nth-child(1) {
+  display: block; /* Shows the Moon icon */
+}
+.theme-toggle svg:nth-child(2) {
+  display: none; /* Hides the Sun icon */
+}
+
+/* Active Light Mode orientation overrides */
+.light-mode .theme-toggle svg:nth-child(1) {
+  display: none; /* Hides the Moon icon */
+}
+.light-mode .theme-toggle svg:nth-child(2) {
+  display: block; /* Shows the Sun icon */
 }
